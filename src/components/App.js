@@ -56,6 +56,12 @@ class App extends React.Component {
     this.setState({ fishes });
   };
 
+  deleteFish = key => {
+    const fishes = { ...this.state.fishes };
+    fishes[key] = null;
+    this.setState({ fishes });
+  };
+
   loadSampleFishes = () => {
     this.setState({
       fishes: sampleFishes
@@ -69,6 +75,12 @@ class App extends React.Component {
     order[key] = order[key] + 1 || 1;
 
     //call setState to update our state Object
+    this.setState({ order });
+  };
+
+  deleteFromOrder = key => {
+    const order = { ...this.state.order };
+    delete order[key];
     this.setState({ order });
   };
 
@@ -88,12 +100,17 @@ class App extends React.Component {
             ))}
           </ul>
         </div>
-        <Order fishes={this.state.fishes} order={this.state.order} />
+        <Order
+          fishes={this.state.fishes}
+          order={this.state.order}
+          deleteFromOrder={this.deleteFromOrder}
+        />
         <Inventory
           addFish={this.addFish}
           updateFish={this.updateFish}
           loadSampleFishes={this.loadSampleFishes}
           fishes={this.state.fishes}
+          deleteFish={this.deleteFish}
         />
       </div>
     );
